@@ -5,6 +5,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.MonthDay;
+import java.time.Year;
+import java.time.YearMonth;
 import java.time.ZonedDateTime;
 
 public class Overview {
@@ -36,6 +39,18 @@ public class Overview {
 		// provider fur current instant, date and time using time-zone
 		Clock clock = Clock.systemDefaultZone();
 		System.out.println("Clock\t\t:" + clock.instant());
+
+		// a month of a specific year
+		YearMonth ym = YearMonth.now();
+		System.out.println("YearMonth\t:" + ym);
+
+		// a day of a specific month
+		MonthDay md = MonthDay.now();
+		System.out.println("MonthDay\t:" + md);
+
+		// a specific year
+		Year year = Year.now();
+		System.out.println("Year\t\t:" + year);
 	}
 
 }

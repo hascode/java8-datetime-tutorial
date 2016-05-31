@@ -11,13 +11,13 @@ public class InstantExample {
 		Instant start = Instant.now();
 		Thread.sleep(2000); // simulate operation
 		Instant stop = Instant.now();
-		System.out.println(String.format("operation started at %s, ended at %s, took %s seconds", start, stop,
-				Duration.between(start, stop).getSeconds()));
+		System.out.printf("operation started at %s, ended at %s, took %s seconds\n", start, stop,
+				Duration.between(start, stop).getSeconds());
 
 		// converting instant to zoned date-time
 		Instant now = Instant.now();
 		ZonedDateTime berlin = ZonedDateTime.ofInstant(now, ZoneId.of("Europe/Berlin"));
-		System.out.println(String.format("instant: %s, berlin: %s", now, berlin));
+		System.out.printf("instant: %s, berlin: %s\n", now, berlin);
 		Instant berlinInstant = berlin.toInstant();
 		System.out.println("instants are equal: " + now.equals(berlinInstant));
 	}

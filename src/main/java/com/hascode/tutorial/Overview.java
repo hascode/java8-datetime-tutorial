@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.MonthDay;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.Year;
 import java.time.YearMonth;
 import java.time.ZonedDateTime;
@@ -51,6 +53,14 @@ public class Overview {
 		// a specific year
 		Year year = Year.now();
 		System.out.println("Year\t\t:" + year);
+
+		// date and time with an offset from greenwich/utc time
+		OffsetDateTime odt = OffsetDateTime.now();
+		System.out.println("OffsetDateTime\t:" + odt);
+
+		// time with an offset from greenwich/utc time
+		OffsetTime ot = OffsetTime.now();
+		System.out.println("OffsetTime\t:" + ot);
 	}
 
 }

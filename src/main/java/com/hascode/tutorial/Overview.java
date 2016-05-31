@@ -1,5 +1,6 @@
 package com.hascode.tutorial;
 
+import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,6 +32,10 @@ public class Overview {
 		// a specific moment in time (in GMT time zone)
 		Instant i = Instant.now();
 		System.out.println("Instant\t\t:" + i);
+
+		// provider fur current instant, date and time using time-zone
+		Clock clock = Clock.systemDefaultZone();
+		System.out.println("Clock\t\t:" + clock.instant());
 	}
 
 }

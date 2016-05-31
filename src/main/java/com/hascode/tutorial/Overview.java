@@ -1,5 +1,6 @@
 package com.hascode.tutorial;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -26,6 +27,10 @@ public class Overview {
 		// CET"
 		ZonedDateTime zdt = ZonedDateTime.now();
 		System.out.println("ZonedDateTime\t:" + zdt);
+
+		// a specific moment in time (in GMT time zone)
+		Instant i = Instant.now();
+		System.out.println("Instant\t\t:" + i);
 	}
 
 }

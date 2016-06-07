@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Micha Kops - Date/Time APIs in Java 8</title>
+
+    <meta name="description" content="Date/Time APIs in Java 8">
+    <meta name="author" content="Micha Kops">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/night.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+        <section>
+            <h1>The time is now!</h1>
+
+            <h3>Date/Time APIs in Java 8</h3>
+
+            <p>
+                <small><a href="http://www.micha-kops.com/">Micha Kops</a> / <a href="http://twitter.com/hascode">@hascode</a>
+                </small>
+            </p>
+        </section>
+
+        <section>
+            <h2>Overview</h2>
+
+            <ul>
+                <li>New Date/Time-Classes</li>
+                <li>Date Manipulation</li>
+                <li>Periods and Durations</li>
+                <li>Formatting and Parsing</li>
+                <li>Instants</li>
+                <li>Clocks</li>
+                <li>TemporalAdjuster API</li>
+                <li>Time-Zones</li>
+                <li>DST, Leap-Seconds and more..</li>
+                <li>New Enumerations and Helper classes</li>
+                <li>Interoperability with Legacy Date APIS</li>
+            </ul>
+        </section>
+
+        <section>
+            <section>
+                <h2>New Date/Time-Classes</h2>
+
+                <ul>
+                    <li>LocalDate</li>
+                    <li>LocalTime</li>
+                    <li>LocalDateTime</li>
+                    <li>ZonedDateTime</li>
+                    <li>Instant</li>
+                    <li>Clock</li>
+                    <li>YearMonth</li>
+                    <li>MonthDay</li>
+                    <li>Year</li>
+                    <li>OffsetTime</li>
+                    <li>OffsetDateTime</li>
+                </ul>
+            </section>
+            <section>
+                <h2>LocalDate</h2>
+                <ul>
+                    <li>represents a date</li>
+                    <li>no time</li>
+                    <li>no timezone</li>
+                    <li>example: my birthday this year</li>
+                    <li>new instance created via factory method</li>
+                </ul>
+                <pre>
+                    <code data-trim data-noescape>
+LocalDate ld = LocalDate.now();
+System.out.println("LocalDate\t:" + ld);
+// LocalDate	:2016-06-07
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h2>LocalTime</h2>
+                <ul>
+                    <li>represents a time</li>
+                    <li>no date</li>
+                    <li>no timezone</li>
+                    <li>example: midnight</li>
+                    <li>new instance created via factory method</li>
+                </ul>
+                <pre>
+                    <code data-trim data-noescape>
+LocalTime lt = LocalTime.now();
+System.out.println("LocalTime\t:" + lt);
+// LocalTime	:19:02:15.982
+                    </code>
+                </pre>
+            </section>
+        </section>
+
+        <section style="text-align: left;">
+            <h1>Thanks for your attention!</h1>
+        </section>
+
+    </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        slideNumber: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: 'plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true}
+        ]
+    });
+
+</script>
+
+</body>
+</html>

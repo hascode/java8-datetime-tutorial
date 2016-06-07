@@ -3,7 +3,7 @@ package com.hascode.tutorial;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-public class ZimeZones {
+public class TimeZones {
 
 	public static void main(String[] args) {
 		ZoneId.getAvailableZoneIds().stream().filter(z -> z.contains("Europe")).sorted().forEach(System.out::println);

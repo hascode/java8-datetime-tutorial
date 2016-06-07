@@ -56,10 +56,10 @@
             <h2>Overview</h2>
 
             <ul>
-                <li>New Date/Time-Classes</li>
-                <li>Date Manipulation</li>
-                <li>Periods and Durations</li>
-                <li>Formatting and Parsing</li>
+                <li><a href="#/2">New Date/Time-Classes</a></li>
+                <li><a href="#/3">Date Manipulation</a></li>
+                <li><a href="#/4">Periods and Durations</a></li>
+                <li><a href="#/5">Formatting and Parsing</a></li>
                 <li>Instants</li>
                 <li>Clocks</li>
                 <li>TemporalAdjuster API</li>
@@ -80,7 +80,6 @@
                     <li>LocalDateTime</li>
                     <li>ZonedDateTime</li>
                     <li>Instant</li>
-                    <li>Clock</li>
                     <li>YearMonth</li>
                     <li>MonthDay</li>
                     <li>Year</li>
@@ -122,6 +121,198 @@ System.out.println("LocalTime\t:" + lt);
                     </code>
                 </pre>
             </section>
+            <section>
+                <h2>LocalDateTime</h2>
+                <ul>
+                    <li>represents a date with time</li>
+                    <li>no timezone</li>
+                    <li>example: midnight at new year's eve</li>
+                    <li>new instance created via factory method</li>
+                </ul>
+                <pre>
+                    <code data-trim data-noescape>
+LocalDateTime ldt = LocalDateTime.now();
+System.out.println("LocalDateTime\t:" + ldt);
+// LocalDateTime	:2016-06-07T19:02:15.982
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h2>ZonedDateTime</h2>
+                <ul>
+                    <li>represents a date with time and timezone</li>
+                    <li>example: meeting at 5:00 p.m., Europe/Berlin</li>
+                    <li>new instance created via factory method</li>
+                </ul>
+                <pre>
+                    <code data-trim data-noescape>
+ZonedDateTime zdt = ZonedDateTime.now();
+System.out.println("ZonedDateTime\t:" + zdt);
+// ZonedDateTime	:2016-06-07T19:02:15.983+02:00[Europe/Berlin]
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h2>Instant</h2>
+                <ul>
+                    <li>represents a specific moment in time (GMT timezone)</li>
+                    <li>new instance created via factory method</li>
+                </ul>
+                <pre>
+                    <code data-trim data-noescape>
+Instant i = Instant.now();
+System.out.println("Instant\t\t:" + i);
+// Instant		:2016-06-07T17:02:15.983Z
+                    </code>
+                </pre>
+                <aside class="notes">
+                    May be used to measure time in a unit of execution, create Instant a, do something, create Instant b, measure the difference..
+                </aside>
+            </section>
+            <section>
+                <h2>YearMonth</h2>
+                <ul>
+                    <li>a month of a specific year</li>
+                    <li>helper methods to transition into a LocalDate</li>
+                    <li>new instance created via factory method</li>
+                </ul>
+                <pre>
+                    <code data-trim data-noescape>
+YearMonth ym = YearMonth.now();
+System.out.println("YearMonth\t:" + ym);
+// YearMonth	:2016-06
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h2>MonthDay</h2>
+                <ul>
+                    <li>a day of a specific month</li>
+                    <li>helper methods to transition into a LocalDate</li>
+                    <li>new instance created via factory method</li>
+                </ul>
+                <pre>
+                    <code data-trim data-noescape>
+MonthDay md = MonthDay.now();
+System.out.println("MonthDay\t:" + md);
+// MonthDay	:--06-07
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h2>Year</h2>
+                <ul>
+                    <li>a specific year</li>
+                    <li>helper methods to transition into a LocalDate</li>
+                    <li>new instance created via factory method</li>
+                </ul>
+                <pre>
+                    <code data-trim data-noescape>
+Year year = Year.now();
+System.out.println("Year\t\t:" + year);
+// Year		:2016
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h2>OffsetTime</h2>
+                <ul>
+                    <li>time with an offset from greenwich/utc time</li>
+                    <li>helper methods to transition into a OffsetDateTime</li>
+                    <li>new instance created via factory method</li>
+                </ul>
+                <pre>
+                    <code data-trim data-noescape>
+OffsetTime ot = OffsetTime.now();
+System.out.println("OffsetTime\t:" + ot);
+// OffsetTime	:19:02:15.995+02:00
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h2>OffsetDateTime</h2>
+                <ul>
+                    <li>date and time with an offset from greenwich/utc time</li>
+                    <li>helper methods to transition into a ZonedDateTime</li>
+                    <li>new instance created via factory method</li>
+                </ul>
+                <pre>
+                    <code data-trim data-noescape>
+OffsetDateTime odt = OffsetDateTime.now();
+System.out.println("OffsetDateTime\t:" + odt);
+// OffsetDateTime	:2016-06-07T19:02:15.994+02:00
+                    </code>
+                </pre>
+            </section>
+        </section>
+
+        <section>
+            <h2>Date Manipulation</h2>
+            <pre>
+                <code data-trim data-noescape>
+LocalDate xmas = LocalDate.of(2016, Month.DECEMBER, 24);
+System.out.printf("x-mas 2016: %s, week-day: %s\n", xmas, xmas.getDayOfWeek());
+LocalDate xmas2017 = xmas.plusYears(1);
+System.out.printf("x-mas 2017: %s, week-day: %s\n", xmas2017, xmas2017.getDayOfWeek());
+LocalDate xmas1999 = xmas2017.minus(18, ChronoUnit.YEARS);
+System.out.printf("x-mas 1999: %s, week-day: %s\n", xmas1999, xmas1999.getDayOfWeek());
+
+LocalDate firstNovember1999 = xmas.minusYears(17).minusMonths(1).minusDays(23);
+System.out.printf("first november 1999: %s, week-day: %s\n", firstNovember1999,
+firstNovember1999.getDayOfWeek());
+
+// x-mas 2016: 2016-12-24, week-day: SATURDAY
+// x-mas 2017: 2017-12-24, week-day: SUNDAY
+// x-mas 1999: 1999-12-24, week-day: FRIDAY
+// first november 1999: 1999-11-01, week-day: MONDAY
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h2>Periods and Durations</h2>
+            <ul>
+                <li>use Periods when dealing with days, months and years</li>
+                <li>use Durations when dealing with hours, minutes, seconds, nanoseconds..</li>
+            </ul>
+            <pre>
+                <code data-trim data-noescape>
+LocalDate start = LocalDate.now();
+LocalDate end = start.plusYears(1);
+Period between = Period.between(start, end);
+System.out.printf("between %s and %s are %s days, written as period: %s\n", start, end,
+ChronoUnit.DAYS.between(start, end), between);
+
+LocalDateTime startTime = LocalDateTime.now();
+LocalDateTime endTime = startTime.plusMinutes(1);
+Duration duration = Duration.ofMinutes(10);
+System.out.printf("now it's %s, in 10 minutes it's %s\n", startTime, startTime.plus(duration));
+System.out.printf("between %s and %s is %s seconds\n", startTime, endTime,
+Duration.between(startTime, endTime).getSeconds());
+
+// between 2016-06-07 and 2017-06-07 are 365 days, written as period: P1Y
+// now it's 2016-06-07T19:58:42.275, in 10 minutes it's 2016-06-07T20:08:42.275
+// between 2016-06-07T19:58:42.275 and 2016-06-07T19:59:42.275 is 60 seconds
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h2>Formatting and Parsing</h2>
+            <pre>
+                <code data-trim data-noescape>
+LocalDate ld = LocalDate.now();
+DateTimeFormatter format = DateTimeFormatter.ofPattern("yy/MM/dd");
+System.out.printf("%s formatted is %s\n", ld, ld.format(format));
+
+String dateString = "13/12/24";
+LocalDate parsed = LocalDate.parse(dateString, format);
+System.out.printf("string %s parsed to local-date %s\n", dateString, parsed);
+
+// 2016-06-07 formatted is 16/06/07
+// string 13/12/24 parsed to local-date 2013-12-24
+                </code>
+            </pre>
         </section>
 
         <section style="text-align: left;">

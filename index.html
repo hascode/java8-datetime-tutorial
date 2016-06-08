@@ -64,9 +64,9 @@
                 <li><a href="#/7">Clocks</a></li>
                 <li><a href="#/8">TemporalAdjuster API</a></li>
                 <li><a href="#/9">Time-Zones</a></li>
-                <li><a href="#/10">DST, Leap-Seconds and more..</a></li>
-                <li><a href="#/11">New Enumerations and Helper classes</a></li>
-                <li><a href="#/12">Interoperability with Legacy Date APIs</a></li>
+                <li><a href="#/10">DST</a>, <a href="#/11">Leap-Seconds</a> and more..</li>
+                <li><a href="#/12">New Enumerations and Helper classes</a></li>
+                <li><a href="#/13">Interoperability with Legacy Date APIs</a></li>
             </ul>
         </section>
 
@@ -473,6 +473,100 @@ System.out.println("After adding one hour, it's now " + winterTime.plusHours(2))
 
 // DST change in Germany from winter to summer time, it's 2016-03-27T01:00+01:00[Europe/Berlin]
 // After adding one hour, it's now 2016-03-27T04:00+02:00[Europe/Berlin]
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h2> Leap-Seconds</h2>
+            <pre>
+                <code data-trim data-noescape>
+System.out.println("1900 is leap year: " + Year.of(1900).isLeap());
+System.out.println("2012 is leap year: " + Year.isLeap(2012));
+
+// 1900 is leap year: false
+// 2012 is leap year: true
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h2> Helper/Utility Classes</h2>
+            <pre>
+                <code data-trim data-noescape>
+// length of year
+System.out.println("length of year 2016: " + Year.of(2016).length());
+System.out.println("length of year 2016: " + Year.of(2017).length());
+
+// Month day validity checking
+System.out.println("Feb 29 is valid for 2016: " + MonthDay.of(Month.FEBRUARY, 29).isValidYear(2016));
+System.out.println("Feb 29 is valid for 2017: " + MonthDay.of(Month.FEBRUARY, 29).isValidYear(2017));
+
+// length of year 2016: 366
+// length of year 2016: 365
+// Feb 29 is valid for 2016: true
+// Feb 29 is valid for 2017: false
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h2> Legacy API Compatability</h2>
+            <pre>
+                <code data-trim data-noescape>
+// Date to Instant
+Date date1 = new Date();
+Instant inst1 = date1.toInstant();
+System.out.printf("date %s to instant %s\n", date1, inst1);
+
+// Date from Instant
+Date date2 = Date.from(inst1);
+System.out.printf("date %s from instant %s equals date %s: %s\n", date2, inst1, date1, date1.equals(date2));
+
+// Calendar to Instant
+Calendar cal1 = Calendar.getInstance();
+Instant inst2 = cal1.toInstant();
+// i hate calendar's toString so much
+System.out.printf("calendar %s to instant %s\n", cal1, inst2);
+
+// gregorian calendar from zoned datetime
+ZonedDateTime zdt1 = ZonedDateTime.now();
+GregorianCalendar gcal1 = GregorianCalendar.from(zdt1);
+System.out.printf("calendar %s from zoned-date-time %s\n", gcal1, zdt1);
+
+// gregorian calendar to zoned datetime
+ZonedDateTime zdt2 = gcal1.toZonedDateTime();
+System.out.printf("converted zoned date-times equal: %s\n", (zdt1.equals(zdt2)));
+
+// TimeZone from ZoneId
+ZoneId zoneId1 = ZoneId.of("Europe/Berlin");
+TimeZone tz = TimeZone.getTimeZone(zoneId1);
+System.out.printf("time-zone from zone-id %s is %s\n", zoneId1, tz);
+
+// java.sql.Date to LocalDate
+java.sql.Date sqlDate = new java.sql.Date(date1.getTime());
+LocalDate ld = sqlDate.toLocalDate();
+System.out.printf("sql-date %s to localdate is: %s\n", sqlDate, ld);
+
+// be careful .. a sql.Date has no time component so this will throw an
+// exception
+try {
+    Instant inst3 = sqlDate.toInstant();
+} catch (UnsupportedOperationException e) {
+    System.out.println("conversion of java.util.Date to Instant is not possible");
+    Instant inst3 = Instant.ofEpochMilli(sqlDate.getTime());
+    System.out.printf("sql.Date %s to Instant using Instant.ofEpochMilli is: %s\n", sqlDate, inst3);
+}
+
+// date Wed Jun 08 18:14:05 CEST 2016 to instant 2016-06-08T16:14:05.294Z
+// date Wed Jun 08 18:14:05 CEST 2016 from instant 2016-06-08T16:14:05.294Z equals date Wed Jun 08 18:14:05 CEST 2016: true
+// calendar java.util.GregorianCalendar[time=1465402445368,areFieldsSet=true,areAllFieldsSet=true,lenient=true,zone=sun.util.calendar.ZoneInfo[id="Europe/Berlin",offset=3600000,dstSavings=3600000,useDaylight=true,transitions=143,lastRule=java.util.SimpleTimeZone[id=Europe/Berlin,offset=3600000,dstSavings=3600000,useDaylight=true,startYear=0,startMode=2,startMonth=2,startDay=-1,startDayOfWeek=1,startTime=3600000,startTimeMode=2,endMode=2,endMonth=9,endDay=-1,endDayOfWeek=1,endTime=3600000,endTimeMode=2]],firstDayOfWeek=1,minimalDaysInFirstWeek=1,ERA=1,YEAR=2016,MONTH=5,WEEK_OF_YEAR=24,WEEK_OF_MONTH=2,DAY_OF_MONTH=8,DAY_OF_YEAR=160,DAY_OF_WEEK=4,DAY_OF_WEEK_IN_MONTH=2,AM_PM=1,HOUR=6,HOUR_OF_DAY=18,MINUTE=14,SECOND=5,MILLISECOND=368,ZONE_OFFSET=3600000,DST_OFFSET=3600000] to instant 2016-06-08T16:14:05.368Z
+// calendar java.util.GregorianCalendar[time=1465402445376,areFieldsSet=true,areAllFieldsSet=true,lenient=true,zone=sun.util.calendar.ZoneInfo[id="Europe/Berlin",offset=3600000,dstSavings=3600000,useDaylight=true,transitions=143,lastRule=java.util.SimpleTimeZone[id=Europe/Berlin,offset=3600000,dstSavings=3600000,useDaylight=true,startYear=0,startMode=2,startMonth=2,startDay=-1,startDayOfWeek=1,startTime=3600000,startTimeMode=2,endMode=2,endMonth=9,endDay=-1,endDayOfWeek=1,endTime=3600000,endTimeMode=2]],firstDayOfWeek=2,minimalDaysInFirstWeek=4,ERA=1,YEAR=2016,MONTH=5,WEEK_OF_YEAR=23,WEEK_OF_MONTH=2,DAY_OF_MONTH=8,DAY_OF_YEAR=160,DAY_OF_WEEK=4,DAY_OF_WEEK_IN_MONTH=2,AM_PM=1,HOUR=6,HOUR_OF_DAY=18,MINUTE=14,SECOND=5,MILLISECOND=376,ZONE_OFFSET=3600000,DST_OFFSET=3600000] from zoned-date-time 2016-06-08T18:14:05.376+02:00[Europe/Berlin]
+// converted zoned date-times equal: true
+// time-zone from zone-id Europe/Berlin is sun.util.calendar.ZoneInfo[id="Europe/Berlin",offset=3600000,dstSavings=3600000,useDaylight=true,transitions=143,lastRule=java.util.SimpleTimeZone[id=Europe/Berlin,offset=3600000,dstSavings=3600000,useDaylight=true,startYear=0,startMode=2,startMonth=2,startDay=-1,startDayOfWeek=1,startTime=3600000,startTimeMode=2,endMode=2,endMonth=9,endDay=-1,endDayOfWeek=1,endTime=3600000,endTimeMode=2]]
+// sql-date 2016-06-08 to localdate is: 2016-06-08
+// conversion of java.util.Date to Instant is not possible
+// sql.Date 2016-06-08 to Instant using Instant.ofEpochMilli is: 2016-06-08T16:14:05.294Z
                 </code>
             </pre>
         </section>

@@ -56,19 +56,35 @@
             <h2>Overview</h2>
 
             <ul>
-                <li class="fragment grow"><a href="#/2">New Date/Time-Classes</a></li>
-                <li class="fragment grow"><a href="#/3">Date Manipulation</a></li>
-                <li class="fragment grow"><a href="#/4">Periods and Durations</a></li>
-                <li class="fragment grow"><a href="#/5">Formatting and Parsing</a></li>
-                <li class="fragment grow"><a href="#/6">Instants</a></li>
-                <li class="fragment grow"><a href="#/7">Clocks</a></li>
-                <li class="fragment grow"><a href="#/8">Temporal Queries</a></li>
-                <li class="fragment grow"><a href="#/9">Temporal Adjuster API</a></li>
-                <li class="fragment grow"><a href="#/10">Time-Zones</a></li>
-                <li class="fragment grow"><a href="#/11">DST</a>, <a href="#/12">Leap-Seconds</a> and more..</li>
-                <li class="fragment grow"><a href="#/13">New Enumerations and Helper classes</a></li>
-                <li class="fragment grow"><a href="#/14">Interoperability with Legacy Date APIs</a></li>
-                <li class="fragment grow"><a href="#/15">Exercises / Examples</a></li>
+                <li><a href="#/2">Why new APIs?</a></li>
+                <li><a href="#/3">New Date/Time-Classes</a></li>
+                <li><a href="#/4">Date Manipulation</a></li>
+                <li><a href="#/5">Periods and Durations</a></li>
+                <li><a href="#/6">Formatting and Parsing</a></li>
+                <li><a href="#/7">Instants</a> <a href="#/8">and Clocks</a></li>
+                <li><a href="#/9">Temporal Queries</a></li>
+                <li><a href="#/10">Temporal Adjuster API</a></li>
+                <li><a href="#/11">Time-Zones</a></li>
+                <li><a href="#/12">DST</a>, <a href="#/13">Leap-Seconds</a> <a href="#/14">and new Enums</a></li>
+                <li><a href="#/15">Interoperability with Legacy Date APIs</a></li>
+                <li><a href="#/16">Exercises / Examples</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Why new APIs?</h2>
+
+            <p>
+                Typical problems with the old <em>java.util.Date</em> and <em>java.util.Calendar</em> APIs.
+            </p>
+
+            <ul>
+                <li>They're mutable - this often leads to issues in multi-threaded environments</li>
+                <li>java.util.Date is a DateTime, therefore the need to create java.sql.Date to persist dates</li>
+                <li>Months are zero-indexed (January = 0)</li>
+                <li>Years are rated with two digit from 1900, so <code>new Date().getYear()</code> in year 2016 returns 116</li>
+                <li>No TimeZones associated with Dates</li>
+                <li>Missing classes for modelling other time-related concepts like durations, periods - this leads to programmers using and <em>int</em> as duration and adding a javadoc describing the unit</li>
             </ul>
         </section>
 
@@ -175,7 +191,7 @@ System.out.println("Instant\t\t:" + i);
             <section>
                 <h2>Clock</h2>
                 <ul>
-                    <li>provider fur current instant, date and time using time-zone</li>
+                    <li>provider for current instant, date and time using time-zone</li>
                 </ul>
                 <pre>
                     <code data-trim data-noescape>
@@ -394,7 +410,7 @@ System.out.println(timeless.millis());
             </ul>
             <pre>
                 <code data-trim data-noescape>
-TemporalQuery<TemporalUnit> query = TemporalQueries.precision();
+TemporalQuery&lt;TemporalUnit&gt; query = TemporalQueries.precision();
 System.out.printf("LocalDate precision: %s%n", LocalDate.now().query(query));
 System.out.printf("LocalDateTime precision: %s%n", LocalDateTime.now().query(query));
 System.out.printf("Year precision: %s%n", Year.now().query(query));
@@ -543,7 +559,7 @@ System.out.println("Feb 29 is valid for 2017: " + MonthDay.of(Month.FEBRUARY, 29
         </section>
 
         <section>
-            <h2> Legacy API Compatability</h2>
+            <h2> Legacy API Compatibility</h2>
             <pre>
                 <code data-trim data-noescape>
 // Date to Instant
@@ -759,7 +775,7 @@ while (cur.isBefore(to)) {
                 <h2 class="fragment grow">How to detect if a given date is Friday, 13th</h2>
                    <pre class="fragment">
                 <code data-trim data-noescape>
-TemporalQuery<Boolean> friday13thQuery = (t) -> {
+TemporalQuery&lt;Boolean&gt; friday13thQuery = (t) -> {
     return t.get(ChronoField.DAY_OF_MONTH) == 13 && t.get(ChronoField.DAY_OF_WEEK) == 5;
 };
 
